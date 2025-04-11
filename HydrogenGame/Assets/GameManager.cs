@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject StandPanel;
     public GameObject ResultPanel;
     public GameObject OptionPanel;
+    public GameObject APIPanel;
 
     public Text Count;
 
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
     public int MaxSelectionCount = 7;
 
     private float CountDown = 4;
-    private float Limit = 60;
+    private float Limit = 10;
 
     private int CountTimer;
     private int LimitTimer = 60;
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         isFinish = true;
         isOption = false;
     ResultPanel.SetActive(false);
+        APIPanel.SetActive(false);
         _objectManager = FindObjectOfType<ObjectManager>();
         _audioSource = GetComponent<AudioSource>();
 
