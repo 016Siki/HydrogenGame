@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject StandPanel;
     public GameObject ResultPanel;
     public GameObject OptionPanel;
+    public GameObject APIPanel;
 
     public Text Count;
 
@@ -57,10 +58,10 @@ public class GameManager : MonoBehaviour
     public int MaxSelectionCount = 7;
 
     private float CountDown = 4;
-    private float Limit = 60;
+    private float Limit = 5;
 
     private int CountTimer;
-    private int LimitTimer = 60;
+    private int LimitTimer = 5;
 
     private bool isStart;
     private bool isFinish;
@@ -88,7 +89,8 @@ public class GameManager : MonoBehaviour
         isStart = false;
         isFinish = true;
         isOption = false;
-    ResultPanel.SetActive(false);
+        ResultPanel.SetActive(false);
+        APIPanel.SetActive(false);
         _objectManager = FindObjectOfType<ObjectManager>();
         _audioSource = GetComponent<AudioSource>();
 
@@ -135,17 +137,17 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateScore()
     {
-        h2Score.text = h2.ToString();
+        h2Score.text = "10Å~"+h2.ToString();
         yield return new WaitForSeconds(0.5f);
-        o2Score.text = o2.ToString();
+        o2Score.text = "10Å~" + o2.ToString();
         yield return new WaitForSeconds(0.5f);
-        n2Score.text = n2.ToString();
+        n2Score.text = "10Å~" + n2.ToString();
         yield return new WaitForSeconds(0.5f);
-        h2oScore.text = h2o.ToString();
+        h2oScore.text = "50Å~" + h2o.ToString();
         yield return new WaitForSeconds(0.5f);
-        nh3Score.text = nh3.ToString();
+        nh3Score.text = "150Å~" + nh3.ToString();
         yield return new WaitForSeconds(0.5f);
-        h2so4Score.text = h2so4.ToString();
+        h2so4Score.text = "500Å~" + h2so4.ToString();
         yield return new WaitForSeconds(0.5f);
         Score.text = score.ToString();
     }

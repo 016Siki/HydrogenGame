@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Scene : MonoBehaviour
@@ -21,6 +22,10 @@ public class Scene : MonoBehaviour
     public GameObject OVERBUTTON;
     public GameObject ENDBUTTON;
     public GameObject OPTIOHBUTTON;
+    public GameObject RANKINGBUTTON;
+    public GameObject APIPanel;
+
+
 
     public void Quit()
     {
@@ -65,11 +70,13 @@ public class Scene : MonoBehaviour
        
     }
 
-    // Startは最初のフレームの前に一度呼び出されます
-    void Start()
+    public void PushGameRankingButton()
     {
-        // ここでは特に初期化処理は行っていませんが、必要に応じて追加できます
+        APIPanel.SetActive(true);
     }
+
+    // Startは最初のフレームの前に一度呼び出されます
+ 
 
     // Updateは毎フレーム呼び出されます
     void Update()
@@ -117,23 +124,23 @@ public class Scene : MonoBehaviour
                     changeSceneRequested = false;
                     OverChangeSceneRequested = false;
                 }
-//                if (OptionChangeSceneRequested)
-//                {
-//                    if (ExitOption)
-//                    {
-//                        SceneManager.LoadScene("Option");
-//                        ExitOption = true;
-//                        changeSceneRequested = false;
-//                        OptionChangeSceneRequested = false;
-//                    }
-//                    else
-//                    {
-//                        SceneManager.LoadScene("Title");
-//                        ExitOption = false;
-//                        changeSceneRequested = false;
-//                        OptionChangeSceneRequested = false;
-//                    }
-//                }
+                if (OptionChangeSceneRequested)
+                {
+                    if (ExitOption)
+                    {
+                        SceneManager.LoadScene("Option");
+                        ExitOption = true;
+                        changeSceneRequested = false;
+                        OptionChangeSceneRequested = false;
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Title");
+                        ExitOption = false;
+                        changeSceneRequested = false;
+                        OptionChangeSceneRequested = false;
+                    }
+                }
             }
         }
     }
