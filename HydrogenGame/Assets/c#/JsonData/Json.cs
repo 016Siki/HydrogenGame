@@ -14,3 +14,18 @@ public class RankingList
 {
     public List<RankingData> rankings;
 }
+
+[System.Serializable]
+public class UserObj
+{
+    public int id;
+    public string name;
+    public string email;
+}
+
+[System.Serializable]
+public class RegisterResponse
+{
+    public string token;
+    public UserObj user;
+}

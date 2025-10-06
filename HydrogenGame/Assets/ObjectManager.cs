@@ -37,6 +37,8 @@ public class ObjectManager : MonoBehaviour
         }
     }
 
+
+
     private GameObject CreatePoolObject(int index)
     {
         GameObject obj = Instantiate(items[index]);
@@ -45,12 +47,18 @@ public class ObjectManager : MonoBehaviour
         obj.AddComponent<ItemClickHandler>().Initialize(this);
         return obj;
     }
-
+    /// <summary>
+    /// オブジェクトの表示
+    /// </summary>
+    /// <param name="target"></param>
     private void OnGetFromPool(GameObject target)
     {
         target.SetActive(true);
     }
-
+    /// <summary>
+    /// オブジェクトの非表示&限定アイテムのflg処理
+    /// </summary>
+    /// <param name="target"></param>
     private void OnReleaseToPool(GameObject target)
     {
         if (target.CompareTag("Item3"))
@@ -59,12 +67,19 @@ public class ObjectManager : MonoBehaviour
         }
         target.SetActive(false);
     }
-
+    /// <summary>
+    /// オブジェクトの削除処理(あまり使わない)
+    /// </summary>
+    /// <param name="target"></param>
     private void OnDestroyPoolObject(GameObject target)
     {
         Destroy(target);
     }
-
+    /// <summary>
+    /// 生成、表示オブジェクトの選定&限定アイテムのflg処理
+    /// </summary>
+    /// <param name="spanPos"></param>
+    /// <returns></returns>
     public GameObject GetPoolItem(Vector3 spanPos)
     {
         int randomIndex = ChooseItemIndex();
@@ -78,7 +93,10 @@ public class ObjectManager : MonoBehaviour
 
         return obj;
     }
-
+    /// <summary>
+    /// 生成オブジェクトの確率の設定
+    /// </summary>
+    /// <returns></returns>
     private int ChooseItemIndex()
     {
         float randomValue = Random.value;
@@ -99,9 +117,13 @@ public class ObjectManager : MonoBehaviour
         {
             return 2;
         }
-        else 
+        else if(!item3OnScreen)
         {
             return 3;
+        }
+        else
+        {
+            return 0;
         }
 
     }

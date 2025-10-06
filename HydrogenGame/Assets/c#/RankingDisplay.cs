@@ -8,26 +8,63 @@ public class RankingDisplay : MonoBehaviour
 {
     public GameObject rankingPanel;
     public GameObject rankingParamPrefab;
-    public string url = "https://script.google.com/macros/s/AKfycbzucqxgMPkUzj-nlUn4P5WdFNG9J8XFl4gYcB619tCj0xgifHQC-kPweaqxOZs3H3YW7Q/exec";
+    public string url = "https://script.google.com/macros/s/AKfycbzKpGVsmQSSiLDdEIqvK9f1RokHO4qcadQZCB0ewxmOP00EO0DGbzCfUGI3S--IbLiS6g/exec";
+    public GameObject loadingIndicator; //ローディング
+    public GameObject RankingPanal;
+    public RankingDisplay rankingDisplay;
 
+
+
+    void Start()
+    {
+        // ここでは特に初期化処理は行っていませんが、必要に応じて追加できます
+        RankingPanal.SetActive(false);
+        // rankingDisplay が未設定なら探す
+        if (rankingDisplay == null)
+        {
+            rankingDisplay = FindObjectOfType<RankingDisplay>();
+            if (rankingDisplay == null)
+            {
+                Debug.Log("RankingDisplay が見つかりません！");
+            }
+        }
+    }
     public void FetchRanking()
     {
         StartCoroutine(GetRanking());
     }
-
+    public void PushRankingButton()
+    {
+        RankingPanal.SetActive(true);
+        FetchRanking();
+    }
+    public void PushRankingButtonExit()
+    {
+        RankingPanal.SetActive(false);
+    }
     private IEnumerator GetRanking()
     {
+        // 1. RankingPanelの子供オブジェクトをすべて削除
+        foreach (Transform child in rankingPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 2. ローディング表示をON
+        if (loadingIndicator != null) loadingIndicator.SetActive(true);
+
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             yield return request.SendWebRequest();
 
+            // 3. ローディング表示をOFF
+            if (loadingIndicator != null) loadingIndicator.SetActive(false);
+
             if (request.result == UnityWebRequest.Result.Success)
             {
-                // レスポンスをそのまま確認
                 string jsonResponse = request.downloadHandler.text;
                 Debug.Log("Response: " + jsonResponse);
 
-                // 必要ならばランキングリスト形式に変換
                 if (!jsonResponse.StartsWith("{\"rankings\":"))
                 {
                     jsonResponse = "{\"rankings\":" + jsonResponse + "}";
@@ -37,13 +74,9 @@ public class RankingDisplay : MonoBehaviour
                 {
                     RankingList rankingList = JsonUtility.FromJson<RankingList>(jsonResponse);
 
-                    // RankingPanelをクリア
-                    foreach (Transform child in rankingPanel.transform)
-                    {
-                        Destroy(child.gameObject);
-                    }
+                    // ★ここでの削除処理は不要になった
+                    // foreach (Transform child in rankingPanel.transform) Destroy(child.gameObject);
 
-                    // ランキングデータを表示
                     foreach (RankingData data in rankingList.rankings)
                     {
                         GameObject param = Instantiate(rankingParamPrefab, rankingPanel.transform);
@@ -63,13 +96,18 @@ public class RankingDisplay : MonoBehaviour
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError("Error parsing JSON: " + e.Message);
+                    Debug.Log("Error parsing JSON: " + e.Message);
                 }
             }
             else
             {
-                Debug.LogError("Error fetching ranking: " + request.error);
+                Debug.Log("Error fetching ranking: " + request.error);
             }
         }
+
+        // 念のため最後にもOFF
+        if (loadingIndicator != null) loadingIndicator.SetActive(false);
     }
+
+
 }

@@ -23,11 +23,9 @@ public class Scene : MonoBehaviour
     public GameObject ENDBUTTON;
     public GameObject OPTIOHBUTTON;
     public GameObject RANKINGBUTTON;
-    public GameObject RankingPanal;
     public GameObject APIPanel;
 
 
-    public RankingDisplay rankingDisplay;
 
     public void Quit()
     {
@@ -77,31 +75,8 @@ public class Scene : MonoBehaviour
         APIPanel.SetActive(true);
     }
 
-    public void PushRankingButton()
-    {
-        RankingPanal.SetActive(true);
-        rankingDisplay.FetchRanking();
-    }
-    public void PushRankingButtonExit()
-    {
-        RankingPanal.SetActive(false);
-    }
-
     // Startは最初のフレームの前に一度呼び出されます
-    void Start()
-    {
-        // ここでは特に初期化処理は行っていませんが、必要に応じて追加できます
-        RankingPanal.SetActive(false);
-        // rankingDisplay が未設定なら探す
-        if (rankingDisplay == null)
-        {
-            rankingDisplay = FindObjectOfType<RankingDisplay>();
-            if (rankingDisplay == null)
-            {
-                Debug.LogError("RankingDisplay が見つかりません！");
-            }
-        }
-    }
+ 
 
     // Updateは毎フレーム呼び出されます
     void Update()
@@ -149,23 +124,23 @@ public class Scene : MonoBehaviour
                     changeSceneRequested = false;
                     OverChangeSceneRequested = false;
                 }
-//                if (OptionChangeSceneRequested)
-//                {
-//                    if (ExitOption)
-//                    {
-//                        SceneManager.LoadScene("Option");
-//                        ExitOption = true;
-//                        changeSceneRequested = false;
-//                        OptionChangeSceneRequested = false;
-//                    }
-//                    else
-//                    {
-//                        SceneManager.LoadScene("Title");
-//                        ExitOption = false;
-//                        changeSceneRequested = false;
-//                        OptionChangeSceneRequested = false;
-//                    }
-//                }
+                if (OptionChangeSceneRequested)
+                {
+                    if (ExitOption)
+                    {
+                        SceneManager.LoadScene("Option");
+                        ExitOption = true;
+                        changeSceneRequested = false;
+                        OptionChangeSceneRequested = false;
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Title");
+                        ExitOption = false;
+                        changeSceneRequested = false;
+                        OptionChangeSceneRequested = false;
+                    }
+                }
             }
         }
     }
