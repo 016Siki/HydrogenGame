@@ -8,6 +8,7 @@ using static System.Net.WebRequestMethods;
 
 public class AccountLogin : MonoBehaviour
 {
+    #region 変数
     [Header("UI入力欄")]
     [SerializeField] private InputField emailInput;
     [SerializeField] private InputField passwordInput;
@@ -22,22 +23,30 @@ public class AccountLogin : MonoBehaviour
 
     [System.Serializable]
     public class TokenResponse { public string token; }
-
+    #endregion
+    /// <summary>
+    /// ゲーム開始時自動ログイン開始
+    /// </summary>
     private void Start()
     {
         StartCoroutine(AutoLogin());
     }
-
+    /// <summary>
+    /// ログアウトボタン押下処理
+    /// </summary>
     public void PushLogOut()
     {
         StartCoroutine(Logout());
     }
-
+    /// <summary>
+    /// ログインボタン押下処理
+    /// </summary>
     public void PushLogin()
     {
-        string email = emailInput.text.Trim();
-        string password = passwordInput.text;
+        string email = emailInput.text.Trim();      //メールフィールドから取得
+        string password = passwordInput.text;       //パスワードフィールドから取得
 
+        //メールフィールドまたはパスワードフィールドが空の場合バリデーションメッセージの表示
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             if (statusText) statusText.text = "メールとパスワードは\n必須です";
@@ -46,23 +55,31 @@ public class AccountLogin : MonoBehaviour
         // 通信コルーチンを開始
         StartCoroutine(Login(email,password));
     }
-
+    /// <summary>
+    /// アカウント作成ボタン押下処理
+    /// </summary>
     public void PushCreateAcount()
     {
-            //string name = nameInput.text.Trim();
-            string email = emailInput.text.Trim();
-            string password = passwordInput.text;
+        string email = emailInput.text.Trim();      //メールフィールドから取得
+        string password = passwordInput.text;       //パスワードフィールドから取得
 
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-            {
-                if (statusText) statusText.text = "メールとパスワードは\n必須です";
-                return;
-            }
-
+        //メールフィールドまたはパスワードフィールドが空の場合バリデーションメッセージの表示
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            if (statusText) statusText.text = "メールとパスワードは\n必須です";
+            return;
+        }
             // 通信コルーチンを開始
-            StartCoroutine(Register(email, password, name));
+        StartCoroutine(Register(email, password, name));
     }
- private IEnumerator Register(string email, string password, string name = null)
+    /// <summary>
+    /// アカウント作成コルーチン
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    private IEnumerator Register(string email, string password, string name = null)
     {
         string url = apiBaseUrl.TrimEnd('/') + "/register";
         var form = new WWWForm();
