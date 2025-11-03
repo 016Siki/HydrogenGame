@@ -6,9 +6,8 @@ using System.Text;
 
 public static class TokenCrypto
 {
-    // 環境変数から読み込む
-    private const string Passphrase = "CHANGE_THIS_TO_A_LONG_SECURE_PASSPHRASE_!!!";
-    private static readonly byte[] Salt = Encoding.UTF8.GetBytes("YourAppSalt-2025-08-27");
+    private const string Passphrase = "SuisokaApp_TokenKey_2025-08-27_A2!vX7r$BqP9@zH5kM1";
+    private static readonly byte[] Salt = Encoding.UTF8.GetBytes("Suisoka_Salt_v1.2.3_2025");
 
     private const int Iterations = 10000; // PBKDF2反復回数（必要に応じて上げる）
 
@@ -20,13 +19,13 @@ public static class TokenCrypto
 
     public static string EncryptAES(string plain)
     {
-        using var aes = Aes.Create();         // AesManaged/AesCryptoServiceProvider でも可
+        using var aes = Aes.Create();         
         aes.KeySize = 256;
         aes.BlockSize = 128;
         aes.Mode = CipherMode.CBC;
         aes.Padding = PaddingMode.PKCS7;
         aes.Key = DeriveKey32();
-        aes.GenerateIV();                     // 16byte
+        aes.GenerateIV();                    
 
         using var ms = new MemoryStream();
         // 先頭にIVを書き込む（復号時に取り出す）
