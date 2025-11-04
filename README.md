@@ -1,38 +1,62 @@
-# すいそかゲーム: ReadMe
----
-## 内容
-- 学校で行われたゲームジャムにて制作
-- 元素を繋げるパズルゲーム
-- スマホユーザーをターゲットとしたゲーム
-- Google Sheets を用いたランキング機能を実装
+# すいそかゲーム
 
-## 開発環境
-- Unity 2022.3.22f1
-- C#
-- Google Apps Script / Google Sheets API (スコア保存・取得用)
-
-## 開発担当箇所
-
-| スクリプト名 | 内容                           |
-| ---- | ---------------------------- |
-| LoadAnima.cs   | 通信を行う際のロードアニメーション        |
-| ObjectManager.cs   | オブジェクトプールでのオブジェクト管理                | 
-| RankingDisplay.cs    |GASを使用したランキングの表示         |
-| ScoreSender.cs   |GASを使用したランキングの登録              |
-| Json.cs   | GASを使用するときに扱うJsonデータ群             |
+> **学校内ゲームジャム制作作品（2025年7月）**  
+> 元素を繋げてスコアを競う、スマートフォン向けのカジュアルパズルゲーム。  
+> Google Sheets と Laravel を活用したオンラインランキング機能を実装しています。
 
 ---
-## ランキング機能について
-- ゲーム内でスコアを送信すると、Google Sheets にデータが保存されます。
-- ランキングは Google Sheets をスプレッドシートを簡易DBとして利用し、スコアを集計・表示しています。
-- サーバーを自前で構築せずに、Google Apps Script とスプレッドシートを用いた簡易バックエンドとして実装しました。
-- これにより、外部データベースを用意しなくてもオンラインランキングを実現しています。
-- 2枚のシートを使用して通信処理を最小化  
-  - 1枚目: 名前とスコアのDB  
-  - 2枚目: 最低スコアの保持  
-  - 新規スコアが最低スコアを上回った場合のみランキングを更新  
 
-### Google Apps Script 抜粋
+##  概要
+
+- **ゲーム制作期間**：2024年7月（3日間）
+- **GASランキング制作期間**:2025年5月
+- **Laravelランキング制作期間**:2025年7月~8月
+- **チーム構成**：3名（企画1名、デザイン1名、プログラム1名［担当：自分］）  
+- **ジャンル**：スマートフォン向けパズルゲーム  
+- **特徴**：
+  - Google Sheetsを利用したサーバーレスなランキング機能（GAS＋API通信）  
+  - Laravelを用いたWebでも閲覧可能なランキング機能  
+  - スマートフォンUIに最適化した操作設計  
+  - オンラインアカウント管理とスコア送信処理を自作APIで実装  
+
+---
+
+## ⚙️ 開発環境
+
+| 項目 | 内容 |
+|------|------|
+| **OS** | Windows / AlmaLinux |
+| **開発環境** | Unity 2022.3.22f1 / Laravel / Visual Studio / VS Code |
+| **開発言語** | C#, PHP, HTML / CSS / JavaScript, Google Apps Script |
+
+---
+
+## 🧑‍💻 担当箇所（主なスクリプト）
+
+| スクリプト名 | 内容 |
+| ---- | ---- |
+| **LoadAnima.cs** | 通信時のロードアニメーション制御 |
+| **ObjectManager.cs** | オブジェクトプールによるオブジェクト管理 |
+| **RankingDisplay.cs** | GASを使用したランキング表示処理 |
+| **ScoreSender.cs** | GASを使用したスコア送信処理 |
+| **AccountLogin.cs** | Laravelを使用したアカウントログインAPI連携 |
+| **LaravelRankingDisplay.cs** | Laravelを使用したランキング表示 |
+| **LaravelScoreSender.cs** | Laravelを使用したスコア送信 |
+| **TokenCrypto.cs** | トークン暗号化・復号処理（Laravel APIとの安全通信） |
+| **Json.cs** | GAS通信で扱うJSONデータ定義群 |
+
+---
+
+## ☁️ Google Apps Script ランキング機能
+
+Google Sheets を簡易データベースとして利用し、  
+サーバーを持たずにスコア登録とランキング取得を実現。
+
+### 構成
+- **scoreシート**：スコアデータ（名前・スコア）  
+- **min_scoreシート**：最低スコアを保持（10位を超える場合のみ更新）  
+
+### GASコード抜粋
 
 ```javascript
 // スコア登録（POST）
@@ -71,3 +95,24 @@ function doGet() {
   return ContentService.createTextOutput(JSON.stringify(top10))
     .setMimeType(ContentService.MimeType.JSON);
 }
+```
+
+## Laravelランキング機能について
+Laravelで構築したサーバー側APIを通じて、
+アカウント管理・トークン認証・スコア保存・ランキング表示を行います。
+## 主な機能
+- メールアドレスによるアカウント作成・ログイン
+- Laravel Sanctum による APIトークン発行
+- トークンをUnityクライアント内でAES暗号化して保持
+- データベース上にスコアを記録し、Webからもランキング閲覧可能
+- 上位50件を表示可能
+
+## Webランキング機能（Laravel連携）
+- クライアントで作成したアカウントでログイン可能
+- 総合・月間・デイリーランキングの切り替え表示
+- 自分の順位をハイライト表示
+- アカウント削除機能（Web限定）
+- 最大100件のランキング閲覧対応
+
+## ポートフォリオ詳細ページ
+詳しくはこちらから:https://shigetahiroki-portfolio.netlify.app/project2
