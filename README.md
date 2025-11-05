@@ -114,5 +114,7 @@ Laravelで構築したサーバー側APIを通じて、
 - アカウント削除機能（Web限定）
 - 最大100件のランキング閲覧対応
 
+## Laravelランキングgit
+Laravelのgitはこちらからhttps://github.com/016Siki/HydrogenGameLaravel/settings
 ## ポートフォリオ詳細ページ
 詳しくはこちらから:https://shigetahiroki-portfolio.netlify.app/project2
