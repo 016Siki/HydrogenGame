@@ -9,13 +9,13 @@
 ##  概要
 
 - **ゲーム制作期間**：2024年7月（3日間）
-- **GASランキング制作期間**:2025年5月
-- **Laravelランキング制作期間**:2025年7月~8月
-- **チーム構成**：3名（企画1名、デザイン1名、プログラム1名［担当：自分］）  
+- **GAS版ランキング制作期間**:2025年5月
+- **Laravel版ランキング制作期間**:2025年7月~9月
+- **チーム構成**：5名（プランナー1名、デザイン1名、プログラマー3名）  
 - **ジャンル**：スマートフォン向けパズルゲーム  
 - **特徴**：
   - Google Sheetsを利用したサーバーレスなランキング機能（GAS＋API通信）  
-  - Laravelを用いたWebでも閲覧可能なランキング機能  
+  - Laravelフレームワークを用いたWebでも閲覧可能なランキング機能  
   - スマートフォンUIに最適化した操作設計  
   - オンラインアカウント管理とスコア送信処理を自作APIで実装  
 
@@ -52,7 +52,7 @@
 
 ---
 
-## Google Apps Script ランキング機能
+## Google Apps Script版ランキング機能
 
 Google Sheets を簡易データベースとして利用し、  
 サーバーを持たずにスコア登録とランキング取得を実現。
@@ -102,24 +102,24 @@ function doGet() {
 }
 ```
 
-## Laravelランキング機能について
-Laravelで構築したサーバー側APIを通じて、
+## Laravel版ランキング機能について
+Laravelも用いて構築したサーバー側APIを通じて、
 アカウント管理・トークン認証・スコア保存・ランキング表示を行います。
-## 主な機能
+## Unityクライアント機能
 - メールアドレスによるアカウント作成・ログイン
 - Laravel Sanctum による APIトークン発行
 - トークンをUnityクライアント内でAES暗号化して保持
-- データベース上にスコアを記録し、Webからもランキング閲覧可能
+- データベース上にスコアを記録
 - 上位50件を表示可能
 
-## Webランキング機能（Laravel連携）
+## Webクライアント機能
 - クライアントで作成したアカウントでログイン可能
 - 総合・月間・デイリーランキングの切り替え表示
 - 自分の順位をハイライト表示
 - アカウント削除機能（Web限定）
 - 最大100件のランキング閲覧対応
 
-## Laravelランキングgit
-Laravelのgitはこちらからhttps://github.com/016Siki/HydrogenGameLaravel
+## Laravelアプリケーションgithub
+Laravelのgitはこちらから⇒**https://github.com/016Siki/HydrogenGameLaravel**
 ## ポートフォリオ詳細ページ
-詳しくはこちらから:https://shigetahiroki-portfolio.netlify.app/project2
+詳しくはこちらから⇒**https://shigetahiroki-portfolio.netlify.app/project2**
