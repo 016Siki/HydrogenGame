@@ -30,6 +30,11 @@
 | **開発言語** | C#, PHP, HTML / CSS / JavaScript, Google Apps Script |
 
 ---
+## クライアントとサーバーの通信構成図
+
+![ゲーム画面](./img/image.png)
+
+---
 
 ## 担当箇所（主なスクリプト）
 
